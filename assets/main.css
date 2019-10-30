@@ -1,0 +1,49 @@
+body {
+	font-family: sans-serif;
+	font-size: 32px;
+	padding: 1em;
+	background-color: #f1f1f1;
+}
+
+.container {
+	width: 700px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+h1, h2 {
+	margin-bottom: 2em;
+}
+
+.intro {
+	margin-bottom: 1em;
+	font-size: 1.2em;
+}
+
+.hobby {
+	margin: 0.5em 0;
+	font-size: 4em;
+	color: #007bff;
+}
+
+@media only screen
+	and (min-width: 400px)
+	and (max-width: 650px) {
+
+	body {
+		font-size: 24px;
+	}
+	.container {
+		width: 100%;
+	}
+}
+
+@media only screen
+	and (max-width: 400px) {
+	body {
+		font-size: 18px;
+	}
+	.container {
+		width: 100%;
+	}
+}
