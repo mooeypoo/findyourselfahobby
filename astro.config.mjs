@@ -10,7 +10,5 @@ export default defineConfig({
     vue()
   ],
   output: "server",
-  adapter: netlify({
-    dist: new URL('./dist/', import.meta.url)
-  })
+  adapter: netlify()
 });
