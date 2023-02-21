@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import data from '../data/data.json';
+
+const introKey = Astro.url.searchParams.get('intro')! || '';
+const hobbyKey = Astro.url.searchParams.get('hobby')! || '';
+
+const intro = introKey && data.intros[introKey]
+  ? data.intros[introKey] : data.intros.basic;
+const hobby = hobbyKey && data.hobbies[hobbyKey]
+  ? data.hobbies[hobbyKey] : data.hobbies[Math.floor(Math.random() * data.hobbies.length)]
+
+const wikilink = `https://en.wikipedia.org/wiki/${encodeURIComponent(hobby)}`
+---
+
+<Layout title="Someone thinks you might need a new hobby">
+	<main>
+    <div class="preintro">If you were given this link, it's probably because</div>
+    <div class="intro">{intro}</div>
+    <div class="prehobby">Why don't you try this activity instead:</div>
+    <div class="hobby">🔥<a href={wikilink}>{hobby}</a>🔥</div>
+    <div class="wikilink"><a href={wikilink}>Here's some information to get you started.</a></div>
+    <div class="outro">🧡 Try it! You might be great at it! 🧡</div>
+	</main>
+  <div class="footer">
+    <div class="button">More variants</div>
+    <div class="button">Share</div>
+    <div class="button">Credits</div>
+  </div>
+</Layout>
+
+<style lang="scss">
+  $small-width: 480px;
+  $medium-width: 768px;
+  $large-width: 1024px;
+  /* Mixins */
+  @mixin screen-small {
+    @media (max-width: #{$medium-width - 1px}) {
+      @content;
+    }
+  }
+
+  @mixin screen-medium {
+    @media (min-width: #{$medium-width}) and (max-width: #{$large-width - 1px}) {
+      @content;
+    }
+  }
+
+  @mixin screen-large {
+    @media (min-width: #{$large-width}) {
+      @content;
+    }
+  }
+
+  @mixin screen-medium-and-smaller {
+    @media (max-width: #{$medium-width - 1px}) {
+      @content;
+    }
+  }
+
+  /* Styles */
+  a {
+    color: #ffe1d3;
+    text-decoration: none;
+  }
+
+  main {
+		margin: auto;
+		padding: 3rem;
+		max-width: 100ch;
+    text-align: center;
+
+    @include screen-medium-and-smaller {
+      padding: 2rem;
+    }
+	}
+
+  .preintro {
+    @include screen-medium-and-smaller {
+      font-size: 0.8rem;
+    }
+  }
+
+  .intro {
+    font-size: 2em;
+    font-weight: 500;
+    margin-bottom: 2em;
+
+    @include screen-medium-and-smaller {
+      font-size: 1.5rem;
+      margin-bottom: 1.5em;
+    }
+  }
+
+  .prehobby {
+    // font-size: 0.7em;
+    margin: 1em 0 0.5em 0;
+
+    @include screen-medium-and-smaller {
+      margin: 3em 0;
+    }
+
+  }
+
+  .outro {
+    margin: 3em 0;
+    font-weight: 800;
+  }
+
+  .hobby {
+		font-size: 3rem;
+		font-weight: 800;
+    margin: 1.5em 0 0.2em;
+
+    @include screen-medium {
+      font-size: 2.5rem;
+    }
+
+    @include screen-small {
+      font-size: 2rem;
+    }
+  }
+
+  .wikilink {
+    a {
+      font-size: 0.7em;
+      color: #ff84cd;
+    }
+  }
+
+  .footer {
+    display: flex;
+    position: fixed;
+    justify-content: space-evenly;
+    align-items: stretch;
+    gap: 1em;
+    background-color: #333;
+    overflow: hidden;
+    bottom: 0;
+    width: 100%;
+    padding: 1em;
+
+    @include screen-small {
+      font-size: 0.8em;
+    }
+  }
+</style>
