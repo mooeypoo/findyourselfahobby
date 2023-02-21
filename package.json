@@ -11,9 +11,7 @@
 	},
 	"dependencies": {
 		"@astrojs/netlify": "^2.1.2",
-		"@astrojs/vue": "^2.0.1",
-		"astro": "^2.0.14",
-		"vue": "^3.2.47"
+		"astro": "^2.0.14"
 	},
 	"devDependencies": {
 		"sass": "^1.58.3"

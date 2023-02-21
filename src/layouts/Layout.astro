@@ -43,14 +43,16 @@ const { title } = Astro.props;
 		--accent: 124, 58, 237;
 		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
 	}
-	html {
+
+  html {
 		font-family: system-ui, sans-serif;
     color: #ffe1d3;
     background: rgb(14,14,14);
     background: linear-gradient(90deg, rgba(14,14,14,1) 0%, rgba(89,0,20,1) 50%, rgba(14,14,14,1) 100%);
-    
-    code {
-  		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-	  		Bitstream Vera Sans Mono, Courier New, monospace;
 	}
+
+  a {
+    color: #ffe1d3;
+    text-decoration: none;
+  }
 </style>

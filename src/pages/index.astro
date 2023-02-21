@@ -30,40 +30,7 @@ const wikilink = `https://en.wikipedia.org/wiki/${encodeURIComponent(hobby)}`
 </Layout>
 
 <style lang="scss">
-  $small-width: 480px;
-  $medium-width: 768px;
-  $large-width: 1024px;
-  /* Mixins */
-  @mixin screen-small {
-    @media (max-width: #{$medium-width - 1px}) {
-      @content;
-    }
-  }
-
-  @mixin screen-medium {
-    @media (min-width: #{$medium-width}) and (max-width: #{$large-width - 1px}) {
-      @content;
-    }
-  }
-
-  @mixin screen-large {
-    @media (min-width: #{$large-width}) {
-      @content;
-    }
-  }
-
-  @mixin screen-medium-and-smaller {
-    @media (max-width: #{$medium-width - 1px}) {
-      @content;
-    }
-  }
-
-  /* Styles */
-  a {
-    color: #ffe1d3;
-    text-decoration: none;
-  }
-
+  @import '../styles/mixins';
   main {
 		margin: auto;
 		padding: 3rem;
@@ -99,7 +66,6 @@ const wikilink = `https://en.wikipedia.org/wiki/${encodeURIComponent(hobby)}`
     @include screen-medium-and-smaller {
       margin: 3em 0;
     }
-
   }
 
   .outro {
