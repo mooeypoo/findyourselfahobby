@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+import data from '../data/data.json';
+
+let introKey = Astro.url.searchParams.get('intro')! || 'basic';
+const hobbyKey = Astro.url.searchParams.get('hobby')! || '';
+
+if (!data.intros[introKey]) {
+  introKey = 'basic';
+}
+---
+
+<Layout title="Find yourself a hobby">
+  <main>
+    <h1>Choose a suitable introduction:</h1>
+    <div class="intro-options">
+      {Object.keys(data.intros).map(
+        key => {
+          let link = `/?intro=${key}`;
+          if (hobbyKey) {
+            link += `&hobby=${hobbyKey}`;
+          }
+          return <a class="intro" href={link}>{key === introKey ? '🌟' : ''} {data.intros[key]} {key === introKey ? '🌟' : ''}</a>
+        }
+      )}
+    </div>
+  </main>
+</Layout>
+
+<style lang="scss">
+  h1 {
+    font-size: 0.8rem;
+  }
+
+  .intro-options {
+    display: flex;
+    margin-top: 2em;
+    flex-direction: column;
+    gap: 2em;
+    font-size: 1.2em;
+  }
+
+  .intro {
+    display: block;
+    padding: 1em;
+    background-image: linear-gradient(
+      0deg,
+      hsl(346deg 89% 54%) 0%,
+      hsl(347deg 86% 53%) 21%,
+      hsl(347deg 83% 51%) 30%,
+      hsl(347deg 81% 50%) 39%,
+      hsl(347deg 83% 48%) 46%,
+      hsl(347deg 85% 47%) 54%,
+      hsl(347deg 88% 45%) 61%,
+      hsl(347deg 92% 43%) 69%,
+      hsl(347deg 96% 42%) 79%,
+      hsl(346deg 100% 40%) 100%
+    );
+  }
+
+</style>

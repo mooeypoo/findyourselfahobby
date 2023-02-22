@@ -4,7 +4,7 @@ import data from '../data/data.json';
 import hobbies from '../data/hobbies.json';
 
 const introKey = Astro.url.searchParams.get('intro')! || '';
-const hobbyKey = Astro.url.searchParams.get('hobby')! || '';
+let hobbyKey = Astro.url.searchParams.get('hobby')! || '';
 
 const intro = introKey && data.intros[introKey]
   ? data.intros[introKey] : data.intros.basic;
@@ -12,14 +12,28 @@ let hobbyData = hobbyKey && hobbies[hobbyKey];
 
 if (!hobbyData) {
   // Get a random hobby key
-  const randomKey = Object.keys(hobbies)[Math.floor(Math.random() * Object.keys(hobbies).length)]
-  hobbyData = hobbies[randomKey]
+  hobbyKey = Object.keys(hobbies)[Math.floor(Math.random() * Object.keys(hobbies).length)]
+  hobbyData = hobbies[hobbyKey]
 }
 
 const wikilink = `https://en.wikipedia.org/wiki/${encodeURIComponent(hobbyData.wikititle)}`
+
+const urlParams = new URLSearchParams({
+  intro: introKey || 'basic',
+  hobby: hobbyKey
+});
+const canonicalURL = new URL(Astro.url);
+canonicalURL.search = '';
+const hobbyLink = `${canonicalURL}?${urlParams.toString()}`;
+
+let randomLink = canonicalURL.toString();
+if (introKey && introKey !== 'basic') {
+  randomLink += `?intro=${introKey}`
+}
+const variantsLink = `/variants?${urlParams.toString()}`;
 ---
 
-<Layout title="Someone thinks you might need a new hobby">
+<Layout title="Find yourself a hobby">
 	<main>
     <div class="preintro">If you were given this link, it's probably because</div>
     <div class="intro">{intro}</div>
@@ -32,26 +46,22 @@ const wikilink = `https://en.wikipedia.org/wiki/${encodeURIComponent(hobbyData.w
       </div>}
     <div class="wikilink"><a href={wikilink}>Here's some information to get you started.</a></div>
     <div class="outro">🧡 Try it! You might be great at it! 🧡</div>
+    <div class="sharing">
+      <div class="sharing-title">Get a link to</div>
+      <div class="sharing-links">
+        <a class="sharing-links-this" href={hobbyLink}>🔗 This activity</a>
+        <a class="sharing-links-random" href={randomLink}>🎲 Random activity</a>
+      </div>
+    </div>
 	</main>
   <div class="footer">
-    <div class="button">More variants</div>
-    <div class="button">Share</div>
-    <div class="button">Credits</div>
+    <a class="button" href={variantsLink}>More variants</a>
+    <a class="button" href='/credits'>Credits</a>
   </div>
 </Layout>
 
 <style lang="scss">
   @import '../styles/mixins';
-  main {
-		margin: auto;
-		padding: 3rem;
-		max-width: 100ch;
-    text-align: center;
-
-    @include screen-medium-and-smaller {
-      padding: 2rem;
-    }
-	}
 
   .preintro {
     @include screen-medium-and-smaller {
@@ -75,7 +85,7 @@ const wikilink = `https://en.wikipedia.org/wiki/${encodeURIComponent(hobbyData.w
     margin: 1em 0 0.5em 0;
 
     @include screen-medium-and-smaller {
-      margin: 3em 0;
+      margin: 2em 0;
     }
   }
 
@@ -94,7 +104,7 @@ const wikilink = `https://en.wikipedia.org/wiki/${encodeURIComponent(hobbyData.w
     }
 
     @include screen-small {
-      font-size: 2rem;
+      font-size: 1.8rem;
     }
   }
 
@@ -105,20 +115,25 @@ const wikilink = `https://en.wikipedia.org/wiki/${encodeURIComponent(hobbyData.w
     }
   }
 
-  .footer {
-    display: flex;
-    position: fixed;
-    justify-content: space-evenly;
-    align-items: stretch;
-    gap: 1em;
-    background-color: #333;
-    overflow: hidden;
-    bottom: 0;
-    width: 100%;
-    padding: 1em;
+  .sharing {
+    margin: 2em;
+    font-size: 0.8em;
+    max-width: 60ch;
+    margin: auto;
+  }
 
-    @include screen-small {
-      font-size: 0.8em;
+  .sharing-title {
+    margin-bottom: 1em;
+  }
+
+  .sharing-links {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    font-weight: 800;
+
+    a {
+      display: block;
     }
   }
 </style>
