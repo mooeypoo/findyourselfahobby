@@ -1,16 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import data from '../data/data.json';
+import hobbies from '../data/hobbies.json';
 
 const introKey = Astro.url.searchParams.get('intro')! || '';
 const hobbyKey = Astro.url.searchParams.get('hobby')! || '';
 
 const intro = introKey && data.intros[introKey]
   ? data.intros[introKey] : data.intros.basic;
-const hobby = hobbyKey && data.hobbies[hobbyKey]
-  ? data.hobbies[hobbyKey] : data.hobbies[Math.floor(Math.random() * data.hobbies.length)]
+let hobbyData = hobbyKey && hobbies[hobbyKey];
 
-const wikilink = `https://en.wikipedia.org/wiki/${encodeURIComponent(hobby)}`
+if (!hobbyData) {
+  // Get a random hobby key
+  const randomKey = Object.keys(hobbies)[Math.floor(Math.random() * Object.keys(hobbies).length)]
+  hobbyData = hobbies[randomKey]
+}
+
+const wikilink = `https://en.wikipedia.org/wiki/${encodeURIComponent(hobbyData.wikititle)}`
 ---
 
 <Layout title="Someone thinks you might need a new hobby">
@@ -18,7 +24,12 @@ const wikilink = `https://en.wikipedia.org/wiki/${encodeURIComponent(hobby)}`
     <div class="preintro">If you were given this link, it's probably because</div>
     <div class="intro">{intro}</div>
     <div class="prehobby">Why don't you try this activity instead:</div>
-    <div class="hobby">🔥<a href={wikilink}>{hobby}</a>🔥</div>
+    <div class="hobby">🔥<a href={wikilink}>{hobbyData.title}</a>🔥</div>
+    {hobbyData.image
+      && hobbyData.image.source 
+      && <div class="hobbyimage">
+        <img src={hobbyData.image.source} width={hobbyData.image.width} height={hobbyData.image.height} />
+      </div>}
     <div class="wikilink"><a href={wikilink}>Here's some information to get you started.</a></div>
     <div class="outro">🧡 Try it! You might be great at it! 🧡</div>
 	</main>
