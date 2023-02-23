@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import data from '../data/data.json';
+
+let introKey = Astro.url.searchParams.get('intro')! || 'basic';
+const hobbyKey = Astro.url.searchParams.get('hobby')! || '';
+
+if (!data.intros[introKey]) {
+  introKey = 'basic';
+}
+---
+
+<Layout title="Find yourself a hobby">
+  <main>
+    <h1>Credits</h1>
+    <ul>
+      <li>Preview photo credit: <a href="https://www.flickr.com/photos/93438832@N04/14302663864">"Mini bridgebuilding"</a><span> by <a href="https://www.flickr.com/photos/93438832@N04">PAUL fotografie (Netherlands)</a></span> is licensed under <a href="https://creativecommons.org/licenses/by/2.0/?ref=ccsearch&amp;atype=html" style="margin-right: 5px;">CC BY 2.0</a></li>
+      <li>Hobbies taken from Wikipedia's <a href="https://en.wikipedia.org/wiki/List_of_hobbies">List of Hobbies</a></li>
+    </ul>
+    <img src="/minibridgebuilding-350x350.jpg" />
+  </main>
+  <div class="footer">
+    <a class="button" href='/'>Back</a>
+  </div>
+</Layout>
+
+<style lang="scss">
+  ul {
+    text-align: left;
+  }
+
+  ul li {
+    margin: 1em 0;
+  }
+
+  img {
+    max-height: 300px;
+  }
+</style>

@@ -2,6 +2,7 @@
 	"intros": {
 		"basic": "it looks like you have a lot of time on your hands.",
 		"takeoverspace": "it looks like you're in a space that is not meant for you.",
-		"energy": "it looks like you are wasting a lot of energy answering comments online."
+		"energy": "it looks like you are wasting a lot of energy answering comments online.",
+    "recommend": "this page can help you find a new fun activity!"
   }
 }
