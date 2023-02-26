@@ -36,7 +36,11 @@ const socialImageURL = new URL('/minibridgebuilding-350x350.jpg', Astro.url);
 		<meta property="twitter:domain" content={canonicalURL}>
 
     <meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mynerve&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <title>{title}</title>
 	</head>
 	<body>
 		<slot />
