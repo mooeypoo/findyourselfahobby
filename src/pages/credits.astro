@@ -20,6 +20,9 @@ if (!data.intros[introKey]) {
 
     </ul>
     <img src="/minibridgebuilding-350x350.jpg" />
+    <div class="kofi">
+      <a href="https://ko-fi.com/mooeypoo">☕ Buy me coffee!</a>
+    </div>
   </main>
   <div class="footer">
     <a class="button" href='/'>Back</a>
@@ -27,6 +30,10 @@ if (!data.intros[introKey]) {
 </Layout>
 
 <style lang="scss">
+  h1 {
+    margin-top: 0;
+  }
+
   ul {
     text-align: left;
     width: calc(100% - 40px - 1em);
@@ -34,6 +41,19 @@ if (!data.intros[introKey]) {
 
   ul li {
     margin: 1em 0;
+  }
+
+  .kofi a {
+    display: inline-block;
+    border: 2px solid #7b002a;
+    background-color: #161616;
+    color: #cccccc;
+    border-radius: 1em;
+    padding: 1em;
+    margin-top: 1em;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   }
 
   img {
