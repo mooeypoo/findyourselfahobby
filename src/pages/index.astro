@@ -77,9 +77,7 @@ const variantsLink = `/variants?${urlParams.toString()}`;
       </div>}
       <div class="wikilink"><a href={wikilink}>🔗 Here's some information to get you started. 🔗</a></div>
     <div class="outro">🧡 Try it! You might be great at it! 🧡</div>
-    <!-- <div class="sharing">
-      <a id="sharing-modal-trigger">🔗 Get direct link</a>
-    </div> -->
+    <a id="sharing-random-link" class="ssharing-link-input" href={randomLink}>🎲 Give me another 🎲</a>
 	</main>
   <div class="footer">
     <a class="button" href={variantsLink}>↩️ Variants</a>
@@ -136,7 +134,7 @@ const variantsLink = `/variants?${urlParams.toString()}`;
   }
 
   .outro {
-    margin: 2em 0;
+    margin: 1em 0 2em;
     font-weight: 800;
   }
 
