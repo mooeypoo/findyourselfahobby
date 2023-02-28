@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Modal } from 'accessible-astro-components'
 import data from '../data/data.json';
 import hobbies from '../data/hobbies.json';
 
@@ -47,17 +48,24 @@ const variantsLink = `/variants?${urlParams.toString()}`;
     <div class="wikilink"><a href={wikilink}>🔗 Here's some information to get you started. 🔗</a></div>
     <div class="outro">🧡 Try it! You might be great at it! 🧡</div>
     <div class="sharing">
-      <div class="sharing-title">Get a link to</div>
+      <a id="sharing-modal-trigger">🔗 Share</a>
+      <!-- <div class="sharing-title">Get a link to</div>
       <div class="sharing-links">
         <a class="sharing-links-this" href={hobbyLink}>🔗 This activity</a>
         <a class="sharing-links-random" href={randomLink}>🎲 Random activity</a>
-      </div>
+      </div> -->
     </div>
 	</main>
   <div class="footer">
     <a class="button" href={variantsLink}>More variants</a>
     <a class="button" href='/credits'>Credits</a>
   </div>
+  <Modal
+    triggerId="sharing-modal-trigger"
+    title="Share this page"
+  >
+
+  </Modal>
 </Layout>
 
 <style lang="scss">
