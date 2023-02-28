@@ -78,18 +78,15 @@ const socialImageURL = new URL('/minibridgebuilding-350x350.jpg', Astro.url);
   .footer {
     display: flex;
     position: fixed;
-    justify-content: space-evenly;
-    align-items: stretch;
-    gap: 1em;
+    justify-content: space-around;
     background-color: #333;
     overflow: hidden;
     bottom: 0;
-    width: 100%;
+    width: calc(100% - 2em);
     padding: 1em;
 
     a {
       color: #e7e7e7;
-      min-width: 40%;
       text-align: center;
     }
 

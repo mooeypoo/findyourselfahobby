@@ -11,6 +11,7 @@
 	},
 	"dependencies": {
 		"@astrojs/netlify": "^2.1.2",
+		"accessible-astro-components": "^1.6.5",
 		"astro": "^2.0.14"
 	},
 	"devDependencies": {
