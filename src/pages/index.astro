@@ -33,39 +33,75 @@ if (introKey && introKey !== 'basic') {
 }
 const variantsLink = `/variants?${urlParams.toString()}`;
 ---
+<script>
+  const copyContent = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  }
+
+  const shareContent = async (url) => {
+    // Use the share API
+    try {
+      navigator.share({
+        title: 'Find yourself a hobby',
+        url
+      })
+    } catch (err) {
+      console.error('This system does not support the Share API')
+    }
+  }
+
+  document.getElementById('sharing-this-input').addEventListener('click', function () {
+    this.select()
+    copyContent(this.value)
+  })
+  document.getElementById('sharing-random-input').addEventListener('click', function () {
+    this.select()
+    copyContent(this.value)
+  })
+</script>
 
 <Layout title="Find yourself a hobby">
 	<main>
     <div class="preintro">If you were given this link, it's probably because</div>
     <div class="intro">{intro}</div>
-    <div class="prehobby">Why don't you try this activity:</div>
-    <div class="hobby">🔥<a href={wikilink}>{hobbyData.title}</a>🔥</div>
+    <div class="prehobby">🔥 Why don't you try this activity:</div>
+    <div class="hobby"><a href={wikilink}>{hobbyData.title}</a></div>
     {hobbyData.image
       && hobbyData.image.source 
       && <div class="hobbyimage">
         <img src={hobbyData.image.source} width={hobbyData.image.width} height={hobbyData.image.height} />
       </div>}
-    <div class="wikilink"><a href={wikilink}>🔗 Here's some information to get you started. 🔗</a></div>
+      <div class="wikilink"><a href={wikilink}>🔗 Here's some information to get you started. 🔗</a></div>
     <div class="outro">🧡 Try it! You might be great at it! 🧡</div>
-    <div class="sharing">
-      <a id="sharing-modal-trigger">🔗 Share</a>
-      <!-- <div class="sharing-title">Get a link to</div>
-      <div class="sharing-links">
-        <a class="sharing-links-this" href={hobbyLink}>🔗 This activity</a>
-        <a class="sharing-links-random" href={randomLink}>🎲 Random activity</a>
-      </div> -->
-    </div>
+    <!-- <div class="sharing">
+      <a id="sharing-modal-trigger">🔗 Get direct link</a>
+    </div> -->
 	</main>
   <div class="footer">
-    <a class="button" href={variantsLink}>More variants</a>
-    <a class="button" href='/credits'>Credits</a>
+    <a class="button" href={variantsLink}>↩️ Variants</a>
+    <a class="button" href="#" id="sharing-modal-trigger">🔗 Direct link</a>
+    <a class="button" href='/credits'>❤️ Credits</a>
   </div>
   <Modal
     triggerId="sharing-modal-trigger"
-    title="Share this page"
+    title="Get a direct link"
   >
-
-  </Modal>
+    <small>(click to copy)</small>
+    <div class="sharing-links">
+      <a id="sharing-this-link" class="sharing-link-input" href={hobbyLink}>This activity 🔗</a>
+      <input id="sharing-this-input" type="text" value={hobbyLink} readonly />
+      <span id="sharing-this-label"></span>
+    </div>
+    <div class="sharing-links">
+      <a id="sharing-random-link" class="ssharing-link-input" href={randomLink}>Random activity 🎲</a>
+      <input id="sharing-random-input" type="text" value={randomLink} readonly />
+      <span id="sharing-random-label"></span>
+    </div>
+    </Modal>
 </Layout>
 
 <style lang="scss">
@@ -100,7 +136,7 @@ const variantsLink = `/variants?${urlParams.toString()}`;
   }
 
   .outro {
-    margin: 3em 0;
+    margin: 2em 0;
     font-weight: 800;
   }
 
@@ -130,24 +166,14 @@ const variantsLink = `/variants?${urlParams.toString()}`;
     }
   }
 
-  .sharing {
-    margin: 2em;
-    font-size: 0.8em;
-    max-width: 60ch;
-    margin: auto;
-  }
-
-  .sharing-title {
-    margin-bottom: 1em;
-  }
-
   .sharing-links {
     width: 100%;
-    display: flex;
-    justify-content: space-evenly;
+    // display: flex;
+    // justify-content: space-evenly;
     font-weight: 800;
 
     a {
+      color: black;
       display: block;
     }
   }

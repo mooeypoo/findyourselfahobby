@@ -52,7 +52,7 @@ fs.readFile('./hobbies.md', 'utf8', async (err, data) => {
         action: 'query',
         prop: 'pageimages',
         titles: title,
-        pithumbsize: 150,
+        pithumbsize: 300,
         format: 'json'
       })
       try {
