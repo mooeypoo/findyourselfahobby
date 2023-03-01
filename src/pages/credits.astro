@@ -3,11 +3,23 @@ import Layout from '../layouts/Layout.astro';
 import data from '../data/data.json';
 
 let introKey = Astro.url.searchParams.get('intro')! || 'basic';
-const hobbyKey = Astro.url.searchParams.get('hobby')! || '';
+let hobbyKey = Astro.url.searchParams.get('hobby')! || '';
 
 if (!data.intros[introKey]) {
   introKey = 'basic';
 }
+
+const paramObj = {
+  intro: introKey || 'basic',
+}
+
+if (hobbyKey) {
+  paramObj['hobby'] = hobbyKey;
+}
+
+const urlParams = new URLSearchParams(paramObj);
+const linkToHome = `/?${urlParams.toString()}`;
+
 ---
 
 <Layout title="Find yourself a hobby">
@@ -21,11 +33,11 @@ if (!data.intros[introKey]) {
     </ul>
     <img src="/minibridgebuilding-350x350.jpg" />
     <div class="kofi">
-      <a href="https://ko-fi.com/mooeypoo">☕ Buy me coffee!</a>
+      <a class="button" href="https://ko-fi.com/mooeypoo">☕ Buy me coffee!</a>
     </div>
   </main>
   <div class="footer">
-    <a class="button" href='/'>Back</a>
+    <a class="footer-button" href={linkToHome}>Back</a>
   </div>
 </Layout>
 
@@ -45,19 +57,7 @@ if (!data.intros[introKey]) {
 
   .kofi {
     margin-top: 3em;
-
-    a {
-      display: inline-block;
-      font-size: 0.7em;
-      border: 2px solid #7b002a;
-      background-color: #161616;
-      color: #cccccc;
-      border-radius: 1em;
-      padding: 1em;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    }
+    font-size: 0.7em;
   }
 
   img {

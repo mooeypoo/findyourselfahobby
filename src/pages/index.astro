@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Modal } from 'accessible-astro-components'
+import { Card, Modal } from 'accessible-astro-components'
 import data from '../data/data.json';
 import hobbies from '../data/hobbies.json';
 
@@ -10,6 +10,15 @@ let hobbyKey = Astro.url.searchParams.get('hobby')! || '';
 const intro = introKey && data.intros[introKey]
   ? data.intros[introKey] : data.intros.basic;
 let hobbyData = hobbyKey && hobbies[hobbyKey];
+
+const trimUrlParamObj = {
+  intro: introKey || 'basic'
+};
+
+if (hobbyKey) {
+  trimUrlParamObj['hobby'] = hobbyKey;
+}
+const trimUrlParam = new URLSearchParams(trimUrlParamObj);
 
 if (!hobbyData) {
   // Get a random hobby key
@@ -31,10 +40,15 @@ let randomLink = canonicalURL.toString();
 if (introKey && introKey !== 'basic') {
   randomLink += `?intro=${introKey}`
 }
-const variantsLink = `/variants?${urlParams.toString()}`;
+const variantsLink = `/variants?${trimUrlParam.toString()}`;
+const creditsLink = `/credits?${trimUrlParam.toString()}`;
 ---
 <script>
   const copyContent = async (text) => {
+    if (!navigator.clipboard) {
+      return;
+    }
+
     try {
       await navigator.clipboard.writeText(text);
     } catch (err) {
@@ -44,6 +58,10 @@ const variantsLink = `/variants?${urlParams.toString()}`;
 
   const shareContent = async (url) => {
     // Use the share API
+    if (!navigator.share) {
+      return;
+    }
+
     try {
       navigator.share({
         title: 'Find yourself a hobby',
@@ -68,21 +86,23 @@ const variantsLink = `/variants?${urlParams.toString()}`;
 	<main>
     <div class="preintro">If you were given this link, it's probably because</div>
     <div class="intro">{intro}</div>
-    <div class="prehobby">🔥 Why don't you try this activity:</div>
-    <div class="hobby"><a href={wikilink}>{hobbyData.title}</a></div>
-    {hobbyData.image
-      && hobbyData.image.source 
-      && <div class="hobbyimage">
-        <img src={hobbyData.image.source} width={hobbyData.image.width} height={hobbyData.image.height} />
-      </div>}
-      <div class="wikilink"><a href={wikilink}>🔗 Here's some information to get you started. 🔗</a></div>
-    <div class="outro">🧡 Try it! You might be great at it! 🧡</div>
-    <a id="sharing-random-link" class="ssharing-link-input" href={randomLink}>🎲 Give me another 🎲</a>
+    <div class="prehobby">Why don't you try this activity:</div>
+    <Card
+      url={wikilink}
+      img={(hobbyData.image && hobbyData.image.source) || '/minibridgebuilding-350x350.jpg'}
+      title={hobbyData.title}
+      footer="🧡 Try it! You might be great at it! 🧡"
+    >
+      
+    </Card>
+    <a class="give-me-another button" href={randomLink}>
+      <span class="dice">🎲</span> Give me another <span class="dice">🎲</span>
+    </a>
 	</main>
   <div class="footer">
-    <a class="button" href={variantsLink}>↩️ Variants</a>
-    <a class="button" href="#" id="sharing-modal-trigger">🔗 Direct link</a>
-    <a class="button" href='/credits'>❤️ Credits</a>
+    <a class="footer-button" href={variantsLink}>↩️ Variants</a>
+    <a class="footer-button" href="#" id="sharing-modal-trigger">🔗 Direct link</a>
+    <a class="footer-button" href={creditsLink}>❤️ Credits</a>
   </div>
   <Modal
     triggerId="sharing-modal-trigger"
@@ -133,41 +153,19 @@ const variantsLink = `/variants?${urlParams.toString()}`;
     }
   }
 
-  .outro {
-    margin: 1em 0 2em;
-    font-weight: 800;
-  }
-
-  .hobby {
-    font-family: 'Permanent Marker', cursive;
-    font-size: 5rem;
-		// font-weight: 800;
-    margin-bottom: 0.2em;
-
-    a {
-      color: white;
+  .give-me-another {
+    .dice {
+      display: inline-block;
+      font-size: 1.2em;
     }
 
-    @include screen-medium {
-      font-size: 4rem;
+    &:hover > .dice {
+      animation: tilt-shaking 0.20s infinite;
     }
-
-    @include screen-small {
-      font-size: 3rem;
-    }
-  }
-
-  .wikilink {
-    a {
-      font-size: 0.7em;
-      color: #ff84cd;
-    }
-  }
+  }  
 
   .sharing-links {
     width: 100%;
-    // display: flex;
-    // justify-content: space-evenly;
     font-weight: 800;
 
     a {
@@ -178,5 +176,13 @@ const variantsLink = `/variants?${urlParams.toString()}`;
     input {
       width: 100%;
     }
+  }
+
+  @keyframes tilt-shaking {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(0eg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
   }
 </style>
