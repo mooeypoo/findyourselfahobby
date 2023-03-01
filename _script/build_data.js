@@ -51,6 +51,7 @@ fs.readFile('./hobbies.md', 'utf8', async (err, data) => {
       const urlParams = new URLSearchParams({
         action: 'query',
         prop: 'pageimages',
+        redirects: 1,
         titles: title,
         pithumbsize: 300,
         format: 'json'
@@ -61,6 +62,7 @@ fs.readFile('./hobbies.md', 'utf8', async (err, data) => {
         const pages = data?.query?.pages;
         // console.log('\nChecking thumb for ', title)
         const thumb = pages && pages[Object.keys(pages)[0]]?.thumbnail;
+        hobbiesObject[key].image = hobbiesObject[key].image || {};
         if (thumb) {
           // Add thumbnail
           hobbiesObject[key].image = thumb;

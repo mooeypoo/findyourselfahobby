@@ -8,6 +8,18 @@ const hobbyKey = Astro.url.searchParams.get('hobby')! || '';
 if (!data.intros[introKey]) {
   introKey = 'basic';
 }
+
+const paramObj = {
+  intro: introKey || 'basic',
+}
+
+if (hobbyKey) {
+  paramObj['hobby'] = hobbyKey;
+}
+
+const urlParams = new URLSearchParams(paramObj);
+const linkToHome = `/?${urlParams.toString()}`;
+
 ---
 
 <Layout title="Find yourself a hobby">
@@ -25,6 +37,9 @@ if (!data.intros[introKey]) {
       )}
     </div>
   </main>
+  <div class="footer">
+    <a class="footer-button" href={linkToHome}>Back</a>
+  </div>
 </Layout>
 
 <style lang="scss">
