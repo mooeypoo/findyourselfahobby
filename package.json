@@ -7,7 +7,8 @@
 		"start": "astro dev",
 		"build": "astro build",
 		"preview": "astro preview",
-		"astro": "astro"
+		"astro": "astro",
+    "deploy": "npm run build && npm run deploy --prefix _script"
 	},
 	"dependencies": {
 		"@astrojs/netlify": "^2.1.2",

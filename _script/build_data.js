@@ -75,7 +75,7 @@ fs.readFile('./hobbies.md', 'utf8', async (err, data) => {
 
     // Write to file
     console.log('Saving to json file...')
-    await storeData(hobbiesObject, './output/hobbies.json');
+    await storeData(hobbiesObject, './hobbies.json');
     console.log('Complete');
 });
 

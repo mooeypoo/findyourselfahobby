@@ -5,12 +5,15 @@
   "description": "",
   "main": "build_data.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "rebuild": "node build_data.js",
+    "copy": "cpy --flat ./hobbies.json ../src/data/",
+    "deploy": "npm run rebuild && npm run copy"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cli-progress": "^3.12.0",
+    "cpy-cli": "^4.2.0",
     "jsdom": "^21.1.0",
     "node-fetch": "^3.3.0",
     "progress": "^2.0.3"
