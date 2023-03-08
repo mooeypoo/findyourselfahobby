@@ -200,7 +200,6 @@ Source: https://en.wikipedia.org/wiki/List_of_hobbies
 * [[Scuba diving]]
 * [[Sculpting]]
 * [[Sewing]]
-* [[Shitposting]]
 * [[Shoemaking]]
 * [[Singing]]
 * [[Sketch (drawing)|Sketching]]
